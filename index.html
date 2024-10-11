@@ -30,14 +30,28 @@
     </style>
   </head>
   <body>
-    <div id="letterboxd-embed-wrapper-tc">Loading...</div>
+    <div id="letterboxd-embed-wrapper-tc">লোড হচ্ছে.....</div>
     <script>
+      // Fetch the Letterboxd embed
       fetch("https://lb.sayed.page/?username=abusayed")
         .then((response) => response.text())
         .then((data) => {
-          document.getElementById("letterboxd-embed-wrapper-tc").innerHTML =
-            data;
+          document.getElementById("letterboxd-embed-wrapper-tc").innerHTML = data;
         });
+
+      // Listen for messages from the parent page
+      window.addEventListener("message", (event) => {
+        // Ensure the message comes from the expected origin
+        if (event.origin !== "https://sayed.page") return;
+
+        // Handle different message types
+        if (event.data === "scrollToTop") {
+          window.scrollTo(0, 0); // Scroll to top
+        }
+        if (event.data === "scrollDown") {
+          window.scrollBy(0, 50); // Scroll down by a step
+        }
+      });
     </script>
   </body>
 </html>
